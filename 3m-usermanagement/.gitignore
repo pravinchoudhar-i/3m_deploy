@@ -1,4 +1,4 @@
-# .env
+.env
 .env_testing
 .env_dev
 .env_prod
