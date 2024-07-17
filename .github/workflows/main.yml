@@ -5,6 +5,9 @@ on: [push]
   #   branches: [ "development" ]
   # pull_request:
   #   branches: [ "development" ]
+env:
+  TAG_LATEST: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:latest
+  TAG_COMMIT: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:${{ github.sha }}
 
 jobs:
   build:
