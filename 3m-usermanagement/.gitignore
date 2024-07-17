@@ -9,6 +9,7 @@ env_3m
 *.py[cod]
 
 # Unit test / coverage reports
+.env
 .tox/
 .coverage
 .cache
