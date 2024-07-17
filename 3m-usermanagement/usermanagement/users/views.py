@@ -16,6 +16,7 @@ from .models import *
 from .utilities import * 
 from .validate import *
 # Move backends.py to main folder
+
 from usermanagement.backends import EmailAuthBackend
 from .serializers import *
 import random
