@@ -1,0 +1,41 @@
+[
+{
+    "model": "users.customuser",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "mobile": "+919278233261",
+        "createdAt": "2022-12-06T12:33:56Z",
+        "createdBy": 1,
+        "updatedBy": null,
+        "updatedAt": null,
+        "status": true
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 2,
+    "fields": {
+        "user": 5,
+        "mobile": "+919767347264",
+        "createdAt": "2022-12-07T17:45:31.048Z",
+        "createdBy": 2,
+        "updatedBy": null,
+        "updatedAt": null,
+        "status": true
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 4,
+    "fields": {
+        "user": 10,
+        "mobile": "+919347348247",
+        "createdAt": "2022-12-09T07:22:28.422Z",
+        "createdBy": 2,
+        "updatedBy": null,
+        "updatedAt": null,
+        "status": true
+    }
+}
+]

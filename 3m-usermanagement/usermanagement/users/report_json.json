@@ -1,0 +1,150 @@
+{
+    "action": "csv",
+    "data": [
+        [
+            "First Name",
+            "Last Name",
+            "Email",
+            "Mobile No",
+            "Organisation",
+            "Location"
+        ],
+        [
+            "Vaishnavi",
+            "Umbarkar",
+            "vaishnavi@gmail.com",
+            "086870 36287",
+            "Techwalnut Innovations LLP",
+            "Nagpur"
+        ],
+        [
+            "TTT",
+            "TTT",
+            "TTT@gmail.com",
+            "9882912221211",
+            "ORG",
+            "LOC"
+        ],
+        [
+            "trial",
+            "Three",
+            "trial-two@gmail.com",
+            "+16612345671",
+            "ORG",
+            "LOC"
+        ],
+        [
+            "Seema",
+            "Tekade",
+            "seema@gmail.com",
+            "088870 36212",
+            "Techwalnut",
+            "Nagpur"
+        ],
+        [
+            "Rohit",
+            "Hazare",
+            "rohit@techwalnut.com",
+            "+919373351904",
+            "Techwalnut",
+            "Nagpur"
+        ],
+        [
+            "Ritik",
+            "Sasane",
+            "rk@gmail.com",
+            "093478 34764",
+            "Techwalnut",
+            "Nagpur"
+        ],
+        [
+            "New ",
+            "user",
+            "new_user@gmail.com",
+            "+919876543210",
+            "ORG",
+            "LOC"
+        ],
+        [
+            "New",
+            "Test user",
+            "new@test.com",
+            "",
+            "ORG",
+            "LOC"
+        ],
+        [
+            "New",
+            "User 2",
+            "new_user@gmail.com",
+            "+91 76226 12667",
+            "ORG",
+            "LOC"
+        ],
+        [
+            "New",
+            "User",
+            "new@gmail.com",
+            "+14087819829",
+            "ORG",
+            "LOC"
+        ],
+        [
+            "Name",
+            "Last name",
+            "name-lastname@gmail.com",
+            "+919898989898",
+            "ORG",
+            "LOC"
+        ],
+        [
+            "Himanshi",
+            "Tekade",
+            "himanshi@gmail.com",
+            "088870 36214",
+            "Techwalnut",
+            "Pune"
+        ],
+        [
+            "fsd",
+            "sfd",
+            "sfdsf@gmail.com",
+            "fsdsfsf",
+            "sfs",
+            "sfsf"
+        ],
+        [
+            "FFF",
+            "FFF",
+            "FFF@gmail.com",
+            "dadsdasdsa",
+            "FF",
+            "FF"
+        ],
+        [
+            "fdfd",
+            "fdfd",
+            "fdfd@gmail.com",
+            "dsda",
+            "das",
+            "dad"
+        ],
+        [
+            "Anjali",
+            "Tiwari",
+            "anjali@gmail.com",
+            "078478 94798",
+            "tech",
+            "Nagpur"
+        ],
+        [
+            "Amit",
+            "Thakare",
+            "amit@gmail.com",
+            "+919898329784",
+            "Google",
+            "Pune"
+        ]
+    ],
+    "createdBy": "Jivan123"
+}

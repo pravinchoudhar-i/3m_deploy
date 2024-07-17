@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- content @s -->
+<div class="nk-content ">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">User Registration Form</h3>
+                            <div class="nk-block-des text-soft">
+                                <p>Fill All The Details</p>
+                                {% if messages %}
+                                <div class="mb-10 fv-row">
+                                    {% for message in messages %}
+                                    <div
+                                        class="alert alert-dismissible d-flex flex-column flex-sm-row px-5 mb-10">
+                                        <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                                            <h6 class="mb-2 text-danger light">{{message}}</h6>
+                                        </div>
+                                        <button type="button"
+                                            class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto"
+                                            data-bs-dismiss="alert">
+                                            <span class="svg-icon svg-icon-2x svg-icon-light">X</span>
+                                        </button>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    <div class="card card-bordered card-stretch">
+                        <div class="card-inner-group">
+                            <div class="card-inner position-relative card-tools-toggle">
+                                <div class="card-title-group">
+                                    <div class="card-tools">
+                                        <form action="{% url 'view-users' %}" method="POST"
+                                           autocomplete="off">
+                                            {% csrf_token %}
+                                            <input hidden name="_put">
+                                            <input hidden name="id" value="{{registeredUser.id }}">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="label_style">First Name
+                                                            <span class="required text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" placeholder="Enter first name" class="form-control" name="fname" maxlength="20" value="{{registeredUser.firstName}}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="label_style">Last Name
+                                                            <span
+                                                                class="required text-danger">*</span>
+                                                            </label>
+                                                        <input type="text" placeholder="Enter last name"class="form-control" name="lname" maxlength="25" value="{{registeredUser.lastName}}" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="label_style mt-3">Email<span
+                                                                class="required text-danger">*</span></label>
+                                                        <input type="email" placeholder="Enter email address" class="form-control" name="email" maxlength="50" value="{{registeredUser.email}}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="label_style mt-3">Mobile No
+                                                            <span class="required text-danger">*</span></label>
+                                                        <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Add country code before the mobile number" value="{{registeredUser.mobile}}" required />
+                                                        <span id="valid-msg" class="hide">✓ Valid</span>
+                                                        <span id="error-msg" class="hide"></span>
+                                                        <input type="text" hidden id="dial-code" name="dial-code" value="" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="label_style mt-3">Organisation<span
+                                                                class="required text-danger">*</span></label>
+                                                        <input type="text" placeholder="Enter organisation name" class="form-control" name="organisation" maxlength="100" value="{{registeredUser.organisation}}" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label class="label_style mt-3">Location<span
+                                                                class="required text-danger">*</span></label>
+                                                        <input type="text" placeholder="Enter location" class="form-control" name="location" maxlength="100" value="{{registeredUser.location}}" required />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button id="submit" class="btn mt-4 btn-lg btn-primary btn-block btn_signIn">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div><!-- .card-tools -->
+
+                                </div><!-- .card-title-group -->
+
+                            </div><!-- .card-inner -->
+
+                        </div><!-- .card-inner-group -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- content @e -->
+</div>
+<!-- wrap @e -->
+</div>
+
+{% endblock content %}
+{% block script %}
+    <script src="{% static 'assets/js/country_code_validations.js' %}" ></script>
+    <script>
+        $(document).ready(function(){
+            updateNumber()
+        })
+    </script>
+    
+{% endblock script %}

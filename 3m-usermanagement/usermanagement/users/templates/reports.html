@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="nk-content ">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Reports</h3>
+                            <div class="nk-block-des text-soft">
+                            <p></p>
+                            {% if messages %}
+                                {% for message in messages %}   
+                                    <div class="example-alert">
+                                        <div class="alert alert-{{ message.tags}} alert-dismissible alert-icon"><strong>{{message}}</strong><button class="close" data-bs-dismiss="alert"></button>
+                                        </div>
+                                    </div>
+                                {% endfor %}   
+                            {% endif %}
+                            </div>
+                        </div><!-- .nk-block-head-content -->
+                        <div class="nk-block-head-content">
+                            <!-- <div class="toggle-wrap nk-block-tools-toggle">    
+                                <button onclick="history.back()" class="btn btn-primary"><em class="icon ni ni-arrow-left"></em>Back</button>  
+                            </div> --><!-- .toggle-wrap -->
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                    <form action="{% url 'reports' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}               
+                    <div class="nk-block">
+                        <div class="card card-bordered card-stretch">
+                            <div class="card-inner-group">
+                                <div class="card-inner position-relative card-tools-toggle">
+                                    <div class="row gy-4">
+                                         <div class="col-xxl-3 col-md-4">
+                                            <div class="form-group">
+                                                <label for="category" class="form-label">Select Events:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select" id="event" name="event" multiple>
+                                                            <option value="" selected disabled>--select--</option >
+                                                            <option value="all">All</option>
+                                                            {% for event in event_names %}
+                                                            <option value="{{event.id}}">{{event.event_name}}</option>
+                                                            {% endfor %} 
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+                                    <div class="col-xxl-3 col-md-4">
+                                            <div class="form-group">
+                                                <label for="category" class="form-label">Select Category:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select" id="category" name="category" onchange ="ShowCategorys(this)" multiple>
+                                                            <option value="" selected disabled>--select--</option>
+                                                            <option value="Brands">Brands</option>
+                                                            <option value="HRs">HRs</option>
+                                                            <option value="Vendors">Vendors</option>
+                                                            <option value="Travel">Travel</option>
+                                                            <option value="Equipments">Equipments</option>
+                                                            <option value="Event Type">Event Type</option>
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>                                           
+                                       
+                                        <div class="col-xxl-3 col-md-4">
+                                            <div class="form-group">
+                                                <label for="category" class="form-label">Select Duration:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select" id="duration" name="duration" onchange ="ShowDates(this)">
+                                                            <option value="" selected disabled>--select--</option >
+                                                            {% for durations in duration %}
+                                                            <option value="{{durations.name}}">{{durations.name}}</option>
+                                                            {% endfor%}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div> 
+                                        <div class="col-xxl-3 col-md-4" id="start" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="start_date" class="form-label"> Start Date </label>
+                                                <div class="form-control-wrap">
+                                                    <input type="datetime-local" class="form-control" id="start_date" name="start_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-3 col-md-4"  id="end" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="end_date" class="form-label"> End Date </label>      
+                                                <div class="form-control-wrap">
+                                                    <input type="datetime-local" class="form-control" id="end_date" name="end_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-xxl-3 col-md-4">
+                                            <div class="form-group">
+                                                <label for="headers" class="form-label">Select Columns:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="headers" name="headers" multiple>
+                                                            <option value="" selected disabled>--select--</option >
+                                                            
+                                                            {% for header in headers %}
+                                                            <option value="{{header.name}}">{{header.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xxl-3 col-md-4" id="select_brand" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="category" class="form-label">Select Brands:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="brand" name="brand" multiple >
+                                                            <option value="" selected disabled>--select--</option>
+                                                            <option value="all">All</option>
+                                                            {% for brand in brands %}
+                                                            <option value="{{brand.id}}">{{brand}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xxl-3 col-md-4" id="select_hr" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="category" class="form-label">Select HRs:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="Hr" name="Hr" multiple>
+                                                            <option value="" selected disabled>--select--</option >
+                                                            <option value="all">All</option>
+                                                            {% for user in users %}
+                                                            <option value="{{user.id}}">{{user}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xxl-3 col-md-4" id="select_vendor" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="category" class="form-label">Select Vendors:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="vendor" name="vendor" multiple>
+                                                            <option value="" selected disabled>--select--</option>
+                                                            <option value="all">All</option>
+                                                            {% for vendor in vendors %}
+                                                            <option value="{{vendor.id}}">{{vendor}}</option>
+                                                            {% endfor %}
+                                                            
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xxl-3 col-md-4" id="select_travel" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="category" class="form-label">Select Travel:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="travel_name" name="travel_name" multiple>
+                                                            <option value="" selected disabled>--select--</option >
+                                                            <option value="all">All</option>
+                                                            {% for travel_name in travel_names %}
+                                                            <option value="{{travel_name.id}}">{{travel_name.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-xxl-3 col-md-4">
+                                            <div class="form-group">
+                                                <label for="travel_type" class="form-label">Select Travel Type:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="travel_type" name="travel_type" multiple>
+                                                            <option value="" selected disabled>--select--</option>
+                                                            {% for travel_type in travel_types %}
+                                                            <option value="{{travel_type.id}}">{{travel_type}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div> -->
+                                        <div class="col-xxl-3 col-md-4" id="select_equipments" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="travel_type" class="form-label">Select Equipment List</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="equipment_type" name="equipment_type" multiple>
+                                                            <option value="" selected disabled>--select--</option>
+                                                            {% for equipment_type in equipment_types %}
+                                                            <option value="{{equipment_type.id}}">{{equipment_type.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xxl-3 col-md-4" id="select_event_types" style="display: None;">
+                                            <div class="form-group">
+                                                <label for="event_type" class="form-label">Select Event Type:</label>
+                                                   <div class="form-control-wrap">
+                                                        <select  class="form-select select2" id="event_type" name="event_type" multiple>
+                                                            <option value="" selected disabled>--select--</option>
+                                                            {% for event_type in event_types %}
+                                                            <option value="{{event_type.name}}">{{event_type.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>  
+                                            </div>
+                                        </div>
+                                                                                       
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                            <button type="submit" class="btn btn-success" name= "action" value=""   >Submit</button>
+                                        </div>          
+                                    </div><!--row-->
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-inner-group -->
+                        </div><!-- .card -->
+                    </div><!-- .nk-block -->
+                </form>
+                </div>
+                </div><!-- .nk-block-head -->
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<!-- <script>
+$(document).ready(function(){
+    // Initialize select2
+    $("#event").select2();
+
+    // Read selected option
+    $('#change-id').click(function(){
+        var username = $('#event option:selected').text();
+        var userid = $('#event').val();
+    });
+})
+</script> -->
+
+<script>
+    function ShowDates(option){
+        console.log(option.value)
+        value = option.value
+        var start = document.getElementById('start')
+        var end = document.getElementById('end')
+        if (value == 'Custom') {          
+            start.style.display = "block";
+            end.style.display = "block";
+        }
+        else {
+            start.style.display = "none";
+            end.style.display = "none";
+        }
+
+    }
+</script>
+
+<script>
+    function ShowCategorys(option){
+        console.log(option.value)
+        value = option.value
+        var select_brand = document.getElementById('select_brand')
+        var select_hr = document.getElementById('select_hr')
+        var select_vendor = document.getElementById('select_vendor')
+        var select_travel = document.getElementById('select_travel')
+        var select_equipments = document.getElementById('select_equipments')
+        var select_event_types = document.getElementById('select_event_types')
+       
+
+        if (value == 'Brands') {          
+            select_brand.style.display = "block";
+        }
+        else if (value == 'HRs'){
+            select_hr.style.display = "block";
+        }
+        else if (value == 'Vendors'){
+            select_vendor.style.display = "block";
+        }
+        else if (value == 'Travel'){
+            select_travel.style.display = "block";
+        }
+        else if (value == 'Equipments'){
+            select_equipments.style.display = "block";
+        }
+        else if (value == 'Event Type'){
+            select_event_types.style.display = "block";
+        }
+
+}
+</script>
+
+<!-- <script>
+$(function() {
+   var filter = $('#logs');
+   filter.on('change', function() {
+      if ($(this).val() == ",ALL") {
+         filter.val('').trigger('chosen:updated');
+         filter.find('option:not([value="ALL"])').attr('selected', 'selected');
+         filter.trigger('chosen:updated');
+      }
+   });
+});
+</script> -->
+
+<!-- onchange="checkLogging()" -->
+{% endblock content %}

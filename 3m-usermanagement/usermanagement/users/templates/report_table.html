@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dynamic Report</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'jquery.min.js' %}"></script>
+</head>
+
+<body>
+  <!--Show the data table after filling the form queryform-->
+    <div class="container mt-5">
+        <div class="my-3">
+          <span><b>copy this list to json file</b></span>
+          <!-- <p class="border border-2 border-dark py-3 text-center mt-2">{{ new_data }}</p> -->
+        </div>
+        <table class="table table-bordered mt-5">
+            
+            <tbody>
+              {% for data in table_data %}                  
+              <tr> 
+                  {% for field in data %}
+                  <td>{{ field }}</td>   
+                  {% endfor %}           
+              </tr> 
+              {% endfor %}                
+            </tbody>
+          </table>
+    </div>
+    
+</body>
+</html>

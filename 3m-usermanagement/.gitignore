@@ -1,0 +1,28 @@
+# .env
+.env_testing
+.env_dev
+.env_prod
+deployment_env
+env_3m
+# Byte-compiled / optimized / DLL files
+./__pycache__/
+*.py[cod]
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+.installed.cfg
+bin
+develop-eggs
+dist
+
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64

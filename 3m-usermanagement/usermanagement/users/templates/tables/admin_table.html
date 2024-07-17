@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- content @s -->
+<div class="nk-content ">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Admin Lists</h3>
+                            <div class="nk-block-des text-soft">
+                                {% if count %}
+                                <p>There are total {{ count }} admins.</p>
+                                {% endif %}
+                            </div>
+                            {% if messages %}
+                                <div>
+                                    {% for message in messages %}
+                                    <div
+                                        class="alert alert-dismissible d-flex flex-column flex-sm-row px-5 mb-10">
+                                        <div class="d-flex flex-column text-dark pe-0 pe-sm-10">
+                                            <h6 class="mb-2 text-success light">{{message}}</h6>
+                                        </div>
+                                        <button type="button"
+                                            class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto"
+                                            data-bs-dismiss="alert">
+                                            <span class="svg-icon svg-icon-2x svg-icon-light">X</span>
+                                        </button>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                        </div><!-- .nk-block-head-content -->
+                        <div class="nk-block-head-content">
+                            <div class="toggle-wrap nk-block-tools-toggle">
+                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                    data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                <div class="toggle-expand-content" data-content="pageMenu">
+                                    <ul class="nk-block-tools g-3">
+                                        <!-- <li><a href="#" class="btn btn-white btn-outline-light"><em
+                                                    class="icon ni ni-download-cloud"></em><span>Export</span></a></li> -->
+                                                    <form action="{% url 'view-admins' %}" method="GET">
+                                                        <li class="nk-block-tools-opt">
+                                                            <div class="drodown">
+                                                                <button type="submit" name="action" value="create"
+                                                                    class="btn_plus_style btn btn-icon btn-primary"><em
+                                                                        class="icon ni ni-plus"></em>
+                                                                    <!-- <span>Add User</span> -->
+                                                                </button>
+            
+                                                            </div>
+                                                        </li>
+                                                    </form>
+                                                <!-- <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a><span>Add
+                                                                    User</span></a></li>
+                                                        <li><a><span>Add
+                                                                    Team</span></a></li>
+                                                        <li><a><span>Import User</span></a></li>
+                                                    </ul>
+                                                </div> -->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- .toggle-wrap -->
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    <div class="card card-bordered card-stretch">
+                        <div class="card-inner-group">
+                            <div class="card-inner position-relative card-tools-toggle">
+                                <div class="card-title-group">
+                                    <div class="card-tools">
+                                        <div class="form-inline flex-nowrap gx-3">
+
+                                            <form action="{% url 'view-admins' %}" method="GET">
+                                                <div class="btn-wrap">
+                                                    <div class="btn-wrap">
+                                                        <input hidden name="entries" value="{{ entries }}">
+                                                        <span class="d-none d-md-block"><button
+                                                                class="btn btn-dim btn-outline-light" type="submit" name="action"
+                                                                value="All">View
+                                                                All</button></span>
+                                                        <!-- <span class="d-md-none"><button type="submit" name="action"
+                                                                value="All"
+                                                                class="btn btn-dim btn-outline-light btn-icon disabled"><em
+                                                                    class="icon ni ni-arrow-right"></em></button></span> -->
+                                                    </div>
+
+                                                    <span class="d-md-none"><button
+                                                            class="btn btn-dim btn-outline-light btn-icon disabled"><em
+                                                                class="icon ni ni-arrow-right"></em></button></span>
+                                                </div>
+                                            </form>
+                                        </div><!-- .form-inline -->
+                                    </div><!-- .card-tools -->
+                                    <div class="card-tools me-n1">
+                                        <ul class="btn-toolbar gx-1">
+                                            <li>
+                                                <a href="#" class="btn btn-icon search-toggle toggle-search"
+                                                    data-target="search"><em class="icon ni ni-search"></em></a>
+                                            </li>
+                                            <!-- li -->
+                                            <!-- <li class="btn-toolbar-sep"></li> -->
+                                            <!-- li -->
+                                            <li>
+                                                <div class="toggle-wrap">
+                                                    <a href="#" class="btn btn-icon btn-trigger toggle"
+                                                        data-target="cardTools"><em
+                                                            class="icon ni ni-menu-right"></em></a>
+                                                    <div class="toggle-content" data-content="cardTools">
+                                                        <ul class="btn-toolbar gx-1">
+                                                            <!-- <li class="toggle-close">
+                                                                <a href="#" class="btn btn-icon btn-trigger toggle"
+                                                                    data-target="cardTools"><em
+                                                                        class="icon ni ni-arrow-left"></em></a>
+                                                            </li> -->
+                                                            <!-- li -->
+                                                            <!-- <li>
+                                                                <div class="dropdown">
+                                                                    <a href="#"
+                                                                        class="btn btn-trigger btn-icon dropdown-toggle"
+                                                                        data-bs-toggle="dropdown">
+                                                                        <div class="dot dot-primary"></div>
+                                                                        <em class="icon ni ni-filter-alt"></em>
+                                                                    </a>
+                                                                    <div
+                                                                        class="filter-wg dropdown-menu dropdown-menu-xl dropdown-menu-end">
+                                                                        <div class="dropdown-head">
+                                                                            <span
+                                                                                class="sub-title dropdown-title">Filter
+                                                                                Users</span>
+                                                                        </div>
+                                                                        <div class="dropdown-body dropdown-body-rg">
+                                                                            <div class="row gx-6 gy-3">
+                                                                                <div class="col-6">
+                                                                                    <div
+                                                                                        class="custom-control custom-control-sm custom-checkbox">
+                                                                                        <input type="checkbox"
+                                                                                            class="custom-control-input"
+                                                                                            id="hasBalance">
+                                                                                        <label
+                                                                                            class="custom-control-label"
+                                                                                            for="hasBalance"> Have
+                                                                                            Balance</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <div
+                                                                                        class="custom-control custom-control-sm custom-checkbox">
+                                                                                        <input type="checkbox"
+                                                                                            class="custom-control-input"
+                                                                                            id="hasKYC">
+                                                                                        <label
+                                                                                            class="custom-control-label"
+                                                                                            for="hasKYC"> KYC
+                                                                                            Verified</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            class="overline-title overline-title-alt">Role</label>
+                                                                                        <select
+                                                                                            class="form-select js-select2">
+                                                                                            <option value="any">Any Role
+                                                                                            </option>
+                                                                                            <option value="investor">
+                                                                                                Investor</option>
+                                                                                            <option value="seller">
+                                                                                                Seller</option>
+                                                                                            <option value="buyer">Buyer
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            class="overline-title overline-title-alt">Status</label>
+                                                                                        <select
+                                                                                            class="form-select js-select2">
+                                                                                            <option value="any">Any
+                                                                                                Status</option>
+                                                                                            <option value="active">
+                                                                                                Active</option>
+                                                                                            <option value="pending">
+                                                                                                Pending</option>
+                                                                                            <option value="suspend">
+                                                                                                Suspend</option>
+                                                                                            <option value="deleted">
+                                                                                                Deleted</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <div class="form-group">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-secondary btn_plus_style">Filter</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="dropdown-foot between">
+                                                                            <a class="clickable color_blue"
+                                                                                href="#">Reset Filter</a>
+                                                                            <a class="color_blue" href="#">Save
+                                                                                Filter</a>
+                                                                        </div> -->
+                                                            <!-- </div> -->
+                                                            <!-- .filter-wg -->
+                                                            <!-- </div> -->
+                                                            <!-- .dropdown -->
+                                                            <!-- </li> -->
+                                                            <!-- li -->
+                                                            <!-- <li>
+                                                                <div class="dropdown">
+                                                                    <a href="#"
+                                                                        class="btn btn-trigger btn-icon dropdown-toggle"
+                                                                        data-bs-toggle="dropdown">
+                                                                        <em class="icon ni ni-setting"></em>
+                                                                    </a>
+                                                                    <div
+                                                                        class="dropdown-menu dropdown-menu-xs dropdown-menu-end"> -->
+                                                            <!-- <ul class="link-check">
+                                                                            <li><span>Show</span></li>
+                                                                            <li class="active"><a href="#">10</a></li>
+                                                                            <li><a href="#">20</a></li>
+                                                                            <li><a href="#">50</a></li>
+                                                                        </ul>
+                                                                        <ul class="link-check">
+                                                                            <li><span>Order</span></li>
+                                                                            <li class="active"><a href="#">DESC</a></li>
+                                                                            <li><a href="#">ASC</a></li>
+                                                                        </ul> -->
+                                                            <!-- </div> -->
+                                                            <!-- </div> -->
+                                                            <!-- .dropdown -->
+                                                            <!-- </li> -->
+                                                            <!-- li -->
+                                                        </ul><!-- .btn-toolbar -->
+                                                    </div><!-- .toggle-content -->
+                                                </div><!-- .toggle-wrap -->
+                                            </li><!-- li -->
+                                        </ul><!-- .btn-toolbar -->
+                                    </div><!-- .card-tools -->
+                                </div><!-- .card-title-group -->
+                                <form action="{% url 'view-admins' %}" method="GET">
+                                    <div class="card-search search-wrap" data-search="search">
+                                        <div class="card-body">
+                                            <input hidden name="entries" value="{{ entries }}">
+                                            <div class="search-content">
+
+                                                <a class="search-back btn btn-icon toggle-search"
+                                                    data-target="search"><em class="icon ni ni-arrow-left"></em></a>
+                                                <input type="text" 
+                                                    class="form-control border-transparent form-focus-none" placeholder="Search by email" name="search">
+                                                <button type="submit" class="search-submit btn btn-icon" name="action" value="search"><em
+                                                        class="icon ni ni-search"></em></button>
+
+                                            </div>
+                                        </div>
+                                    </div><!-- .card-search -->
+                                </form>
+                            </div><!-- .card-inner -->
+                            <div class="card-inner p-0">
+                                <div class="nk-tb-list nk-tb-ulist">
+                                    <div class="nk-tb-item nk-tb-head">
+
+                                        <div class="nk-tb-col"><span class="sub-text">Email </span></div>
+                                        <div class="nk-tb-col tb-col-mb"><span class="sub-text">First Name</span></div>
+                                        <div class="nk-tb-col tb-col-mb"><span class="sub-text">Last Name</span></div>
+                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">Mobile</span></div>
+                                        <!-- <div class="dropdown">
+                                                <a href="#"
+                                                    class="btn btn-xs btn-outline-light btn-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" data-offset="0,5"><em
+                                                        class="icon ni ni-plus"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
+                                                    <ul class="link-tidy sm no-bdr">
+                                                        <li>
+                                                            <div
+                                                                class="custom-control custom-control-sm custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    checked="" id="bl">
+                                                                <label class="custom-control-label"
+                                                                    for="bl">Balance</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div
+                                                                class="custom-control custom-control-sm custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    checked="" id="ph">
+                                                                <label class="custom-control-label"
+                                                                    for="ph">Phone</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div
+                                                                class="custom-control custom-control-sm custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="vri">
+                                                                <label class="custom-control-label"
+                                                                    for="vri">Verified</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div
+                                                                class="custom-control custom-control-sm custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="st">
+                                                                <label class="custom-control-label"
+                                                                    for="st">Status</label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div> 
+                                            </div> -->
+                                    </div>
+                                <!-- .nk-tb-item -->
+                                {% for i in page_obj %}
+                                <div class="nk-tb-item">
+                                    <div class="nk-tb-col tb-col-mb">
+                                        <span>{{ i.user.email }} </span>
+
+                                        <!-- <a href="html/user-details-regular.html">
+                                                <div class="user-card">
+                                                    <div class="user-avatar bg-primary">
+                                                        <span>AB</span>
+                                                    </div>
+                                                    <div class="user-info">
+                                                        <span class="tb-lead">{{ i.user.username }} <span
+                                                                class="dot dot-success d-md-none ms-1"></span></span>
+                                                        <span>{{ i.user.email }}</span>
+                                                    </div>
+                                                </div>
+                                            </a> -->
+                                    </div>
+                                    <div class="nk-tb-col tb-col-mb">
+                                        <span>{{ i.user.first_name }} </span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-mb">
+                                        <span>{{ i.user.last_name }} </span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-md">
+                                        <span>{{ i.mobile }}</span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div><!-- .nk-tb-list -->
+                        </div><!-- .card-inner -->
+                        <div class="card-inner">
+                            <div class="nk-block-between-md g-3">
+                                <div class="g">
+                                    <ul class="pagination justify-content-center justify-content-md-start">
+                                        {% if page_obj.has_previous %}
+                                        <li class="page-item"><a class="page-link"
+                                                href="{{pagination_url}}page={{ page_obj.previous_page_number }}">Prev</a>
+                                        </li>
+                                        {% endif %}
+                                        {% for num in page_obj.paginator.page_range %}
+                                        {% if page_obj.number == num %}
+
+                                        <li class="page-item"><a class="page-link"
+                                                href="{{pagination_url}}page={{ num }}">{{num}}</a></li>
+                                        {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %} <li
+                                            class="page-item"><a class="page-link" href="{{pagination_url}}page={{ num }}">{{ num }}</a>
+                                            </li>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% if page_obj.has_next %}
+                                            <li class="page-item"><a class="page-link"
+                                                    href="{{pagination_url}}page={{ page_obj.next_page_number }}">Next</a>
+                                            </li>
+                                            {% endif %}
+
+                                    </ul><!-- .pagination -->
+                                </div>
+                                <div class="g">
+                                    <div class="color_black pagination-goto d-flex justify-content-center justify-content-md-start gx-3">
+                                        <div>No. of entries per page</div>
+                                            <div>
+                                                <form action="{% url 'view-admins' %}" method="GET">
+                                                <select name="entries" >
+                                                    
+                                                    <option value="25">25</option>
+                                                    <option value="30">30</option>
+                                                    <option value="40">40</option>
+                                                    <option value="50">50</option>
+                                                    <option value="60">60</option>
+                                                    <option value="70">70</option>
+                                                    <option value="80">80</option>
+                                                    <option value="90">90</option>
+                                                    <option value="100">100</option>
+                                                    </select>
+                                                    <button type="submit" class="btn btn-dim">
+                                                        submit
+                                                    </button>                   
+                                                </form>
+                                            </div>                                    
+                                    </div>
+                                </div>
+                            </div><!-- .nk-block-between -->
+                        </div><!-- .card-inner -->
+                    </div><!-- .card-inner-group -->
+                </div><!-- .card -->
+            </div><!-- .nk-block -->
+        </div>
+    </div>
+</div>
+</div>
+<!-- content @e -->
+</div>
+<!-- wrap @e -->
+</div>
+
+{% endblock content %}
+
