@@ -34,6 +34,12 @@ jobs:
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASS }}
 
+      - name: Print environment variables for debugging
+        run: |
+          echo "CI_REGISTRY_IMAGE: ${{ env.CI_REGISTRY_IMAGE }}"
+          echo "TAG_LATEST: ${{ env.TAG_LATEST }}"
+          echo "TAG_COMMIT: ${{ env.TAG_COMMIT }}"
+
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker pull $TAG_COMMIT"
