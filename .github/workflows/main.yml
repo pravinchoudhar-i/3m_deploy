@@ -46,7 +46,10 @@ jobs:
           ssh-private-key: ${{ secrets.ID_RSA }}
 
       - name: Log in to DockerHub
-        run: echo "${{ secrets.CI_JOB_TOKEN }}" | docker login -u gitlab-ci-token --password-stdin ${{ secrets.CI_REGISTRY }}
+        uses: docker/login-action@v2
+        with:
+          username: gitlab-ci-token
+          password: ${{ secrets.CI_JOB_TOKEN }}
 
       - name: Deploy to server
         run: |
