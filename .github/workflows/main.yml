@@ -30,9 +30,9 @@ jobs:
         pip install -r 3m-usermanagement/usermanagement/requirements.txt
         
   deploy:
-    name: Deploy
+    if : github.ref_name == 'development'
     runs-on: ubuntu-latest
-    if: github.ref == 'development'
+    # if: github.ref == 'development'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
