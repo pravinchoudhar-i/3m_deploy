@@ -6,7 +6,7 @@ on: [push]
   # pull_request:
   #   branches: [ "development" ]
 
-jobs:
+jobs: 
   deploy:
     if: github.ref_name == 'development'
     runs-on: ubuntu-latest
