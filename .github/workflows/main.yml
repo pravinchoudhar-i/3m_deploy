@@ -5,17 +5,16 @@ on: [push]
   #   branches: [ "development" ]
   # pull_request:
   #   branches: [ "development" ]
-env:
-  CI_REGISTRY_IMAGE: ${{ secrets.CI_REGISTRY_IMAGE }}
-  TAG_LATEST: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:latest
-  TAG_COMMIT: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:${{ github.sha }}
 
 jobs:
-  
   deploy:
-    if : github.ref_name == 'development'
+    if: github.ref_name == 'development'
     runs-on: ubuntu-latest
-    # if: github.ref == 'development'
+    env:
+      CI_REGISTRY_IMAGE: ${{ secrets.CI_REGISTRY_IMAGE }}
+      TAG_LATEST: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:latest
+      TAG_COMMIT: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:${{ github.sha }}
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -36,9 +35,9 @@ jobs:
 
       - name: Print environment variables for debugging
         run: |
-          echo "CI_REGISTRY_IMAGE: ${{ env.CI_REGISTRY_IMAGE }}"
-          echo "TAG_LATEST: ${{ env.TAG_LATEST }}"
-          echo "TAG_COMMIT: ${{ env.TAG_COMMIT }}"
+          echo "CI_REGISTRY_IMAGE: $CI_REGISTRY_IMAGE"
+          echo "TAG_LATEST: $TAG_LATEST"
+          echo "TAG_COMMIT: $TAG_COMMIT"
 
       - name: Deploy to server
         run: |
