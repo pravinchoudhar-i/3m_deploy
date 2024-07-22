@@ -8,7 +8,7 @@ RUN apt-get update \
     && /env/bin/pip install --upgrade pip \
     && pip install -r /3m-usermanagement/usermanagement/requirements.txt
 
-ADD 3m-usermanagement/usermanagement/usermanagement
+ADD 3m-usermanagement/usermanagement
 WORKDIR /usermanagement
 
 ENV VIRTUAL_ENV /env
