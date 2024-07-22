@@ -5,6 +5,8 @@ ADD 3m-usermanagement/usermanagement/requirements.txt /3m-usermanagement/userman
 
 RUN apt-get update \
     && apt-get install -y libpq-dev gcc \
+    && python -m venv /env \
+    && /env/bin/pip install --upgrade pip \
     && pip install -r /3m-usermanagement/usermanagement/requirements.txt
 
 ADD . /3m-production
