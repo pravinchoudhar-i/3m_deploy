@@ -5,7 +5,7 @@ RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
-    && /env/bin/pip install --no-cache-dir -r /3m/requirements.txt
+    && /env/bin/pip install --no-cache-dir -r /3m-usermanagement/usermanagement/requirements.txt
     
 
 ADD . /3m-production
