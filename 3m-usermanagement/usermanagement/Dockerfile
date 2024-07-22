@@ -1,7 +1,6 @@
 
 FROM python:3.10.5-slim-buster
-ADD requirements.txt /3m/requirements.txt
-
+ADD requirements.txt /3m-usermanagement/usermanagement/requirements.txt
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && python -m venv /env \
