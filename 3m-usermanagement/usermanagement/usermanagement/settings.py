@@ -46,9 +46,10 @@ DEBUG = True
 # EMAIL_BACKEND= 'django.core.mail.backends.smtp.EmailBackend'
 
 # ALLOWED_HOSTS = ['localhost','178.128.196.165','usermanagement-test.elorca.com']
-ALLOWED_HOSTS = ['localhost','127.0.0.1','usermanagement-test.elorca.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(",")
 
-CSRF_TRUSTED_ORIGINS = ['https://usermanagement-test.elorca.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(",")
+
 
 # Application definition
 
