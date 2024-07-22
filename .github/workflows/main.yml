@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # CI_REGISTRY_IMAGE: ${{ secrets.CI_REGISTRY_IMAGE }}
-      TAG_LATEST: ${{ github.repository }}:${{ github.ref_name }}:latest
-      TAG_COMMIT: ${{ github.repository }}:${{ github.ref_name }}:${{ github.sha }}
+      TAG_LATEST: ${{ github.repository }}:${{ github.ref_name }}-latest
+      TAG_COMMIT: ${{ github.repository }}:${{ github.ref_name }}-${{ github.sha }}
       
     steps:
       - name: Checkout code
