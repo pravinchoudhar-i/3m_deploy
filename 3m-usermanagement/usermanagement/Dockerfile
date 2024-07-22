@@ -8,8 +8,8 @@ RUN apt-get update \
     && /env/bin/pip install --upgrade pip \
     && pip install -r /3m-usermanagement/usermanagement/requirements.txt
 
-ADD . /3m-production
-WORKDIR /3m-production
+ADD . /3m-usermanagement
+WORKDIR /3m-usermanagement
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
