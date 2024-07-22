@@ -11,10 +11,8 @@ jobs:
     if: github.ref_name == 'development'
     runs-on: ubuntu-latest
     env:
-      REGISTRY: ${{ secrets.REGISTRY }}
-      REPO_NAME: pravinchoudhar-i/3m_deploy
-      TAG_LATEST: ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest
-      TAG_COMMIT: ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}
+      REGISTRY: 'docker.io'  # Docker Hub as default
+      REPO_NAME: 'pravinchoudhar-i/3m_deploy'
       
     steps:
       - name: Checkout code
@@ -22,7 +20,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t $TAG_LATEST -t $TAG_COMMIT .
+          docker build -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }} .
 
       - name: Log in to Docker Registry
         uses: docker/login-action@v2
@@ -32,8 +30,8 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push $TAG_LATEST
-          docker push $TAG_COMMIT
+          docker push ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest
+          docker push ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}
 
       - name: Install SSH client
         run: sudo apt-get update && sudo apt-get install -y openssh-client
@@ -45,11 +43,12 @@ jobs:
 
       - name: Print environment variables for debugging
         run: |
-          echo "TAG_LATEST: $TAG_LATEST"
-          echo "TAG_COMMIT: $TAG_COMMIT"
-        
+          echo "REPO_NAME: ${{ env.REPO_NAME }}"
+          echo "TAG_LATEST: ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest"
+          echo "TAG_COMMIT: ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}"
+
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker pull $TAG_COMMIT"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker pull ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}"
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker container rm -f 3m_app || true"
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker run -d -p 8040:8000 --name 3m_app $TAG_COMMIT"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker run -d -p 8040:8000 --name 3m_app ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}"
