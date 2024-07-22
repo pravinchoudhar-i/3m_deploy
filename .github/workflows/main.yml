@@ -11,9 +11,9 @@ jobs:
     if: github.ref_name == 'development'
     runs-on: ubuntu-latest
     env:
-      CI_REGISTRY_IMAGE: ${{ secrets.CI_REGISTRY_IMAGE }}
-      TAG_LATEST: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:latest
-      TAG_COMMIT: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:${{ github.sha }}
+      # CI_REGISTRY_IMAGE: ${{ secrets.CI_REGISTRY_IMAGE }}
+      TAG_LATEST: ${{ github.repository }}:${{ github.ref_name }}:latest
+      TAG_COMMIT: ${{ github.repository }}:${{ github.ref_name }}:${{ github.sha }}
       
     steps:
       - name: Checkout code
