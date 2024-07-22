@@ -10,10 +10,10 @@ jobs:
   deploy:
     if: github.ref_name == 'development'
     runs-on: ubuntu-latest
-    # env:
-    #   # CI_REGISTRY_IMAGE: ${{ secrets.CI_REGISTRY_IMAGE }}
-    #   TAG_LATEST: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:latest
-    #   TAG_COMMIT: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:${{ github.sha }}
+    env:
+      CI_REGISTRY_IMAGE: ${{ secrets.CI_REGISTRY_IMAGE }}
+      TAG_LATEST: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:latest
+      TAG_COMMIT: ${{ secrets.CI_REGISTRY_IMAGE }}/${{ github.ref_name }}:${{ github.sha }}
       
     steps:
       - name: Checkout code
