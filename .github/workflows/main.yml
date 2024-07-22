@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGISTRY: 'docker.io'  # Docker Hub as default  
-      REPO_NAME: 'pravinchoudhar-i/3m_deploy'
+      REPO_NAME: 'pravin290/3m_deploy'
       
     steps: 
       - name: Checkout code
