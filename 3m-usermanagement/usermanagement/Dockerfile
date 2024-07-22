@@ -1,4 +1,3 @@
-
 FROM python:3.10.5-slim-buster
 
 ADD 3m-usermanagement/usermanagement/requirements.txt /3m-usermanagement/usermanagement/requirements.txt
