@@ -7,7 +7,7 @@ jobs:
     if: github.ref_name == 'development'  
     runs-on: ubuntu-latest
     env:
-      REGISTRY: 'docker.io'  # Docker Hub as default 
+      REGISTRY: 'docker.io'  # Docker Hub as default  
       REPO_NAME: 'pravinchoudhar-i/3m_deploy'
       
     steps:
