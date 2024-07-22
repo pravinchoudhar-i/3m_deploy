@@ -1,3 +1,5 @@
+env_file/
+.env_file/
 .env
 .env_testing
 .env_dev
