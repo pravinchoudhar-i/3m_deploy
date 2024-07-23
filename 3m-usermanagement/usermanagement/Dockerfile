@@ -6,10 +6,10 @@ RUN apt-get update \
     && apt-get install -y libpq-dev gcc \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
-    && /env/bin/pip install -r /3m-usermanagement/usermanagement/requirements.txt
+    && pip install -r /3m-usermanagement/usermanagement/requirements.txt
 
-ADD . /3m-usermanagement/usermanagement
-WORKDIR /3m-usermanagement/usermanagement
+ADD . /3m-usermanagement
+WORKDIR /3m-usermanagement
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
