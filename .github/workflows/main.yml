@@ -5,7 +5,7 @@ on: [push]
 jobs: 
   deploy: 
     if: github.ref_name == 'development'  
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     env:
       REGISTRY: 'docker.io'  # Docker Hub as default  
       REPO_NAME: 'pravin290/3m_deploy'
