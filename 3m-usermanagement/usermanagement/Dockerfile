@@ -6,7 +6,7 @@ RUN apt-get update \
     && apt-get install -y libpq-dev gcc \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
-    && pip install -r /3m-usermanagement/usermanagement/requirements.txt
+    && /env/bin/pip install -r /3m-usermanagement/usermanagement/requirements.txt
 
 ADD . /3m-usermanagement/usermanagement
 WORKDIR /3m-usermanagement/usermanagement
