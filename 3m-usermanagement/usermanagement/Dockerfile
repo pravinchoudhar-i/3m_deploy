@@ -1,7 +1,7 @@
 FROM python:3.10.5-slim-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
-ADD 3m-usermanagement/usermanagement/requirements.txt /3m-usermanagement/usermanagement/requirements.txt
+ADD requirements.txt /requirements.txt
 
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
@@ -21,4 +21,4 @@ ENV PATH /env/bin:$PATH
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "usermanagement.usermanagement.wsgi:application"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "usermanagement.wsgi:application"]
