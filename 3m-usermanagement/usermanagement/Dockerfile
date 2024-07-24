@@ -14,7 +14,7 @@ WORKDIR /3m-usermanagement
 
 
 # Copy the .env file
-COPY .env /3m-usermanagement/.env
+COPY /3m-usermanagement/usermanagement/.env /3m-usermanagement/usermanagement/.env
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
