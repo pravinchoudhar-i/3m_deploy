@@ -1,7 +1,7 @@
 FROM python:3.10.5-slim-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
-ADD requirements.txt /requirements.txt
+ADD 3m-usermanagement/usermanagement/requirements.txt /3m-usermanagement/usermanagement/requirements.txt
 
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
@@ -14,7 +14,7 @@ WORKDIR /3m-usermanagement
 
 
 # Copy the .env file
-COPY /3m-usermanagement/usermanagement/.env /3m-usermanagement/usermanagement/.env
+COPY /.env /.env
 
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
