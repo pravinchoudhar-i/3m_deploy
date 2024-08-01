@@ -13,7 +13,7 @@ ADD . /3m-usermanagement
 WORKDIR /3m-usermanagement
 
 
-# Copy the .env file
+# Copy the .env file8
 COPY /3m-usermanagement/usermanagement/.env /3m-usermanagement/usermanagement/.env
 
 ENV VIRTUAL_ENV /env
@@ -21,4 +21,4 @@ ENV PATH /env/bin:$PATH
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "usermanagement.usermanagement.wsgi:application"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "usermanagement.wsgi:application"]
