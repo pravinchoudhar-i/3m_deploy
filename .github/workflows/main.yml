@@ -2,18 +2,17 @@ name: Django CI
 
 on: [push]
 
-jobs: 
-  deploy: 
-    if: github.ref_name == 'development'  
-    runs-on: ubuntu-latest 
+jobs:
+  build:
+    runs-on: ubuntu-latest
     env:
-      REGISTRY: 'docker.io'  # Docker Hub as default  
+      REGISTRY: 'docker.io'  # Docker Hub as default
       REPO_NAME: 'pravin290/3m_deploy'
-      
-    steps: 
+
+    steps:
       - name: Checkout code
-        uses: actions/checkout@v3 
- 
+        uses: actions/checkout@v3
+
       - name: Build Docker image
         run: |
           docker build -f 3m-usermanagement/usermanagement/Dockerfile -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }} .
@@ -29,6 +28,14 @@ jobs:
           docker push ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest
           docker push ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}
 
+  deploy:
+    if: github.ref_name == 'development'
+    runs-on: ubuntu-latest
+    needs: build  # Ensure deploy job runs only if build job succeeds
+    env:
+      REPO_NAME: 'pravin290/3m_deploy'
+
+    steps:
       - name: Install SSH client
         run: sudo apt-get update && sudo apt-get install -y openssh-client
 
