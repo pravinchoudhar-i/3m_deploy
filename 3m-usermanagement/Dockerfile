@@ -7,7 +7,7 @@ WORKDIR /3m
 
 # Copy and install dependencies
 COPY 3m-usermanagement/usermanagement/requirements.txt /3m/usermanagement/requirements.txt
-RUN apt-get update \
+RUN apt-get update \ 
     && apt-get -y install libpq-dev gcc \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
