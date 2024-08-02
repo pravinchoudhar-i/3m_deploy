@@ -14,7 +14,7 @@ RUN apt-get update \
     && /env/bin/pip install --no-cache-dir -r /3m/requirements.txt
 
 # Copy application files
-COPY 3m-usermanagement /3m
+COPY /3m-usermanagement /3m
 
 # Set environment variables
 ENV VIRTUAL_ENV /env
