@@ -1,7 +1,7 @@
 FROM python:3.10.5-slim-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
-ADD usermanagement/requirements.txt /3m-usermanagement/usermanagement/requirements.txt
+ADD /usermanagement/requirements.txt /3m-usermanagement/usermanagement/requirements.txt
 
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
