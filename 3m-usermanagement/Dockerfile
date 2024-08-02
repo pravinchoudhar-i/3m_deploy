@@ -3,18 +3,18 @@ FROM python:3.10.5-slim-buster
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Set working directory
-WORKDIR /app
+WORKDIR /3m
 
 # Copy and install dependencies
-COPY 3m-usermanagement/usermanagement/requirements.txt /app/requirements.txt
+COPY 3m-usermanagement/usermanagement/requirements.txt /3m/requirements.txt
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
-    && /env/bin/pip install --no-cache-dir -r /app/requirements.txt
+    && /env/bin/pip install --no-cache-dir -r /3m/requirements.txt
 
 # Copy application files
-COPY 3m-usermanagement /app
+COPY 3m-usermanagement /3m
 
 # Set environment variables
 ENV VIRTUAL_ENV /env
