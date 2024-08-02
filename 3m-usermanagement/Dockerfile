@@ -24,4 +24,4 @@ ENV PATH /env/bin:$PATH
 EXPOSE 8000
 
 # Command to run the application
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "usermanagement.wsgi:application"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "usermanagement.usermanagement.wsgi:application"]
