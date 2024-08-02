@@ -6,12 +6,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /3m
 
 # Copy and install dependencies
-COPY 3m-usermanagement/usermanagement/requirements.txt /3m/requirements.txt
+COPY 3m-usermanagement/usermanagement/requirements.txt /3m/usermanagement/requirements.txt
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
-    && /env/bin/pip install --no-cache-dir -r /3m/requirements.txt
+    && /env/bin/pip install --no-cache-dir -r /3m/usermanagement/requirements.txt
 
 # Copy application files
 COPY /3m-usermanagement /3m
