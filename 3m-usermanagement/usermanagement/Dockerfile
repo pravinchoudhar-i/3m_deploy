@@ -1,7 +1,7 @@
 FROM python:3.10.5-slim-buster
 
 # Corrected the path to requirements.txt
-ADD 3m-usermanagement/requirements.txt /3m/requirements.txt
+ADD 3m-usermanagement/usermanagement/requirements.txt /3m/requirements.txt
 
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
