@@ -51,7 +51,7 @@ jobs:
           ssh-private-key: ${{ secrets.ID_RSA }}
 
       - name: Set SSH key permissions
-        run: chmod 600 ~/.ssh/id_rsa
+        # run: chmod 600 ~/.ssh/id_rsa
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.1
