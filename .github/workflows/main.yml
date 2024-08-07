@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    steps: 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -50,14 +50,11 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.ID_RSA }}
 
-      - name: Set SSH key permissions
-        # run: chmod 600 ~/.ssh/id_rsa
-
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.1
         with:
           source: "."
-          target: /home/tw-usermanagement-practice
+          target: "/home/tw-usermanagement-practice"
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.ID_RSA }}
@@ -72,7 +69,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /home/tw-usermanagement-practice
-            docker build -t usermanagement_app .
+            docker build -t my_django_app .
             docker stop usermanagement || true
             docker rm usermanagement || true
             docker run -d -p 8040:8000 --name usermanagement usermanagement_app
