@@ -27,9 +27,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
-    env:
-      REGISTRY: 'docker.io'  # Docker Hub as default
-      REPO_NAME: 'pravin290/3m_deploy'
 
     steps:
       - name: Checkout code
@@ -37,25 +34,12 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -f 3m-usermanagement/usermanagement/Dockerfile -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }} 3m-usermanagement/usermanagement
-
-      - name: Log in to Docker Registry
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.REGISTRY_USER }}
-          password: ${{ secrets.REGISTRY_PASS }}
-
-      - name: Push Docker image
-        run: |
-          docker push ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest
-          docker push ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}
+          docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app 3m-usermanagement/usermanagement
 
   deploy:
     if: github.ref_name == 'development'
     runs-on: ubuntu-latest
-    needs: build  # Ensure deploy job runs only if build job succeeds
-    env:
-      REPO_NAME: 'pravin290/3m_deploy'
+    needs: build
 
     steps:
       - name: Install SSH client
@@ -66,14 +50,26 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.ID_RSA }}
 
-      - name: Print environment variables for debugging
-        run: |
-          echo "REPO_NAME: ${{ env.REPO_NAME }}"
-          echo "TAG_LATEST: ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest"
-          echo "TAG_COMMIT: ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}"
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.1
+        with:
+          source: "."
+          target: /home/tw-usermanagement-practice
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.ID_RSA }}
+          port: ${{ secrets.SERVER_PORT }}
 
       - name: Deploy to server
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker pull ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}"
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker container rm -f usermanagement || true"
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "docker run -d -p 8040:8000 --name usermanagement ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }}"
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.ID_RSA }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            cd /home/tw-usermanagement-practice
+            docker build -t usermanagement_app .
+            docker stop usermanagement || true
+            docker rm usermanagement || true
+            docker run -d -p 8040:8000 --name usermanagement usermanagement_app
