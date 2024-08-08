@@ -45,17 +45,22 @@ jobs:
       - name: Install SSH client
         run: sudo apt-get update && sudo apt-get install -y openssh-client
 
+      - name: Set permissions for SSH key
+        run: |
+          echo "${{ secrets.ID_RSA }}" > /tmp/id_rsa
+          chmod 600 /tmp/id_rsa
+
       - name: Debug SSH connection
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.ID_RSA }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH connection established'"
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH connection established'"
 
       - name: Copy files to server
         run: |
-          scp -i ${{ secrets.ID_RSA }} -P ${{ secrets.SERVER_PORT }} -r . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
+          scp -i /tmp/id_rsa -P ${{ secrets.SERVER_PORT }} -r . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.ID_RSA }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /home/tw-usermanagement-practice
             docker build -t usermanagement_app .
             docker stop usermanagement || true
