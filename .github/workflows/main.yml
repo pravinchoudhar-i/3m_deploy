@@ -19,7 +19,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r 3m-usermanagement/usermanagement/requirements.txt
-
+          
       - name: Run tests
         run: |
           python 3m-usermanagement/usermanagement/manage.py test
@@ -59,6 +59,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.ID_RSA }}
           port: ${{ secrets.SERVER_PORT }}
+          debug: true
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.2
@@ -69,7 +70,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /home/tw-usermanagement-practice
-            docker build -t usermanagement_app .
+            docker build -t my_django_app .
             docker stop usermanagement || true
             docker rm usermanagement || true
             docker run -d -p 8040:8000 --name usermanagement usermanagement_app
