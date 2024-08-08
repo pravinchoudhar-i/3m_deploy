@@ -56,7 +56,7 @@ jobs:
 
       - name: Copy files to server
         run: |
-          scp -i /tmp/id_rsa -P ${{ secrets.SERVER_PORT }} -r scp -i /tmp/id_rsa -P ${{ secrets.SERVER_PORT }} -r ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
+          scp -i /tmp/id_rsa -P ${{ secrets.SERVER_PORT }} -r ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
 
       - name: Deploy to server
         run: |
