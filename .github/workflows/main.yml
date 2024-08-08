@@ -56,7 +56,7 @@ jobs:
 
       - name: Copy files to server
         run: |
-             rsync -avz -e "ssh -i /tmp/id_rsa -p ${{ secrets.SERVER_PORT }}" . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
+             rsync -avz --no-perms -e "ssh -i /tmp/id_rsa -p ${{ secrets.SERVER_PORT }}" . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
 
       - name: Deploy to server
         run: |
