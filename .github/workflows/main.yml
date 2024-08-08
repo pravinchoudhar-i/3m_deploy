@@ -45,35 +45,20 @@ jobs:
       - name: Install SSH client
         run: sudo apt-get update && sudo apt-get install -y openssh-client
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.ID_RSA }}
-
       - name: Debug SSH connection
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH connection established'"
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.ID_RSA }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH connection established'"
 
       - name: Copy files to server
-        uses: appleboy/scp-action@v0.1.1
-        with:
-          source: "."
-          target: /home/tw-usermanagement-practice
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.ID_RSA }}
-          port: ${{ secrets.SERVER_PORT }}
+        run: |
+          scp -i ${{ secrets.ID_RSA }} -P ${{ secrets.SERVER_PORT }} -r . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
 
       - name: Deploy to server
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.ID_RSA }}
-          port: ${{ secrets.SERVER_PORT }}
-          script: |
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.ID_RSA }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /home/tw-usermanagement-practice
             docker build -t usermanagement_app .
             docker stop usermanagement || true
             docker rm usermanagement || true
             docker run -d -p 8040:8000 --name usermanagement usermanagement_app
+          EOF
