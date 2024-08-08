@@ -63,7 +63,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
               cd /home/tw-usermanagement-practice || exit 1
               ls -l 3m-usermanagement/usermanagement || exit 1
-              docker build -t usermanagement_app 3m-usermanagement/usermanagement || exit 1
+              docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app /home/tw-usermanagement-practice/3m-usermanagement/usermanagement
               docker stop usermanagement || true
               docker rm usermanagement || true
               docker run -d -p 8040:8000 --name usermanagement usermanagement_app || exit 1
