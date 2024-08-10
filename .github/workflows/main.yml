@@ -48,7 +48,9 @@ jobs:
           echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
       - name: List local files before syncing
-        run: ls -la
+        run: |
+          echo "Local files:"
+          ls -la
 
       - name: Copy files to server
         run: |
