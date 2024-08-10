@@ -40,6 +40,9 @@ jobs:
           echo "${{ secrets.ID_RSA }}" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
 
+      - name: Ensure SSH directory exists
+        run: mkdir -p ~/.ssh
+
       - name: Bypass SSH Host Key Checking
         run: |
           echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
