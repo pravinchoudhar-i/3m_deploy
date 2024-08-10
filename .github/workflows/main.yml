@@ -1,6 +1,9 @@
 name: Django CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - development
 
 jobs:
   test:
@@ -24,22 +27,9 @@ jobs:
         run: |
           python 3m-usermanagement/usermanagement/manage.py test
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   needs: test
-
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-
-  #     - name: Build Docker image
-  #       run: |
-  #         docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app 3m-usermanagement/usermanagement
-
   deploy:
     if: github.ref_name == 'development'
     runs-on: ubuntu-latest
-    # needs: build
 
     steps:
       - name: Install SSH client
@@ -50,21 +40,24 @@ jobs:
           echo "${{ secrets.ID_RSA }}" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
 
-      - name: Debug SSH connection
-        run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH connection established'"
+      - name: List local files before syncing
+        run: ls -la
 
       - name: Copy files to server
         run: |
-             rsync -avz --no-perms --no-owner --no-group -e "ssh -i /tmp/id_rsa -p ${{ secrets.SERVER_PORT }}" . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice
+          rsync -avz --delete --no-perms --no-owner --no-group -e "ssh -i /tmp/id_rsa -p ${{ secrets.SERVER_PORT }}" . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/tw-usermanagement-practice/
+
+      - name: List files on server after rsync
+        run: |
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "ls -la /home/tw-usermanagement-practice"
 
       - name: Deploy to server
         run: |
-            ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-              cd /home/tw-usermanagement-practice || exit 1
-              ls -l 3m-usermanagement/usermanagement || exit 1
-              docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app /home/tw-usermanagement-practice/3m-usermanagement/usermanagement
-              docker stop usermanagement || true
-              docker rm usermanagement || true
-              docker run -d -p 8040:8000 --name usermanagement usermanagement_app || exit 1
-            EOF
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            cd /home/tw-usermanagement-practice || exit 1
+            ls -l 3m-usermanagement/usermanagement || exit 1
+            docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app /home/tw-usermanagement-practice/3m-usermanagement/usermanagement
+            docker stop usermanagement || true
+            docker rm usermanagement || true
+            docker run -d -p 8040:8000 --name usermanagement usermanagement_app || exit 1
+          EOF
