@@ -30,7 +30,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app .
+        docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app 3m-usermanagement/usermanagement
 
     - name: Deploy to Server
       env:
