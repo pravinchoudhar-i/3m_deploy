@@ -38,7 +38,6 @@ jobs:
         SERVER_IP: ${{ secrets.SERVER_IP }}
         SERVER_USER: ${{ secrets.SERVER_USER }}
       run: |
-        # Example: Save Docker image as a tar file and transfer it to the server
         mkdir -p ~/.ssh
         echo "$ID_RSA" | tr -d '\r' > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
@@ -46,4 +45,9 @@ jobs:
         # Save Docker image as a tar file and transfer it to the server
         docker save usermanagement_app | gzip > usermanagement_app.tar.gz
         scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no usermanagement_app.tar.gz $SERVER_USER@$SERVER_IP:/home/tw-usermanagement-practice
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker load < /home/tw-usermanagement-practice/usermanagement_app.tar.gz && docker-compose up -d"
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "
+          docker load < /home/tw-usermanagement-practice/usermanagement_app.tar.gz &&
+          docker stop usermanagement_app || true &&
+          docker rm usermanagement_app || true &&
+          docker run -d --name usermanagement_app -p 8040:8000 usermanagement_app:latest
+        "
