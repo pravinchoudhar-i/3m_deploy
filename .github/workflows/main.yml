@@ -18,13 +18,13 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /home/tw-usermanagement-practice || exit 1
             if [ -d ".git" ]; then
               git fetch origin || exit 1
               git reset --hard origin/development || exit 1
             else
-              git clone -b development ${{ secrets.URL }} . || exit 1
+              git clone -b development ${{ secrets.REPO_URL }} . || exit 1
             fi
             docker build -f 3m-usermanagement/usermanagement/Dockerfile -t usermanagement_app . || exit 1
             docker stop usermanagement || true
