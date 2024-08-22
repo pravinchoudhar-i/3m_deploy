@@ -16,7 +16,7 @@ jobs:
  
       - name: Build Docker image
         run: |
-          docker build -f 3m-usermanagement/usermanagement/Dockerfile -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }} 3m-usermanagement/Dockerfile
+          docker build -f 3m-usermanagement/usermanagement/Dockerfile -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-latest -t ${{ env.REPO_NAME }}:${{ github.ref_name }}-${{ github.sha }} 3m-usermanagement/usermanagement
 
       - name: Log in to Docker Registry
         uses: docker/login-action@v2
